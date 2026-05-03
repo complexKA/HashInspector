@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/Info-Active.png</file>
+        <file>images/Info-Normal.png</file>
+        <file>images/Info-Selected.png</file>
+        <file>images/Quit-Active.png</file>
+        <file>images/Quit-Normal.png</file>
+        <file>images/Quit-Selected.png</file>
+        <file>images/Setting-Active.png</file>
+        <file>images/Setting-Normal.png</file>
+        <file>images/Setting-Selected.png</file>
+        <file>images/HashInspector-Logo.png</file>
+        <file>images/Setting-Disabled.png</file>
+        <file>images/Info-Disabled.png</file>
+        <file>images/RedArrow.png</file>
+    </qresource>
+</RCC>

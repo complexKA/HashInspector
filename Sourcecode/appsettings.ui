@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AppSettings</class>
+ <widget class="QDialog" name="AppSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>458</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QPushButton" name="pb_Save">
+   <property name="geometry">
+    <rect>
+     <x>533</x>
+     <y>410</y>
+     <width>80</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Save settings and close</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pb_Cancel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>410</y>
+     <width>80</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Discard changes and close</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
+   <property name="text">
+    <string>&amp;Cancel</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pb_Default">
+   <property name="geometry">
+    <rect>
+     <x>363</x>
+     <y>410</y>
+     <width>80</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Restore default settings</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
+   <property name="text">
+    <string>&amp;Default</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>641</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="General">
+    <attribute name="title">
+     <string>General</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_SaveAndRestore">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>40</y>
+       <width>301</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Save and restore</string>
+     </property>
+     <widget class="QCheckBox" name="cb_SaveWindowsPS">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>201</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
+      <property name="text">
+       <string>Window positions and sizes</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>261</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Allow multiple instances</string>
+     </property>
+     <widget class="QRadioButton" name="rb_InstanceMulti">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>51</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Yes</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_InstanceSingle">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>40</y>
+        <width>51</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>No</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>140</y>
+       <width>301</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>File dialog</string>
+     </property>
+     <widget class="QCheckBox" name="cb_FDsaveLastDir">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>191</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
+      <property name="text">
+       <string>Remember last directory</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_FDsavePosSize">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>201</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
+      <property name="text">
+       <string>Save dialog position and size</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>Appearance</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_Theme">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>371</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+     </property>
+     <property name="title">
+      <string>UI</string>
+     </property>
+     <widget class="QRadioButton" name="rb_WhiteTheme">
+      <property name="geometry">
+       <rect>
+        <x>125</x>
+        <y>46</y>
+        <width>71</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>White</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_DarkTheme">
+      <property name="geometry">
+       <rect>
+        <x>195</x>
+        <y>46</y>
+        <width>71</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dark</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>193</x>
+        <y>90</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Restart required</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="dsb_UIscalingFactor">
+      <property name="geometry">
+       <rect>
+        <x>125</x>
+        <y>83</y>
+        <width>51</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="decimals">
+       <number>1</number>
+      </property>
+      <property name="minimum">
+       <double>1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>2.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.100000000000000</double>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>27</x>
+        <y>90</y>
+        <width>91</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Scaling factor :</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>64</x>
+        <y>49</y>
+        <width>54</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Theme :</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_ShowTooltips">
+      <property name="geometry">
+       <rect>
+        <x>124</x>
+        <y>190</y>
+        <width>121</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Show tooltips</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_HideLogo">
+      <property name="geometry">
+       <rect>
+        <x>124</x>
+        <y>210</y>
+        <width>141</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Enable this option to provide more room for entries</string>
+      </property>
+      <property name="text">
+       <string>Hide logo in header</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>170</y>
+        <width>221</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>120</y>
+        <width>291</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Please note: scaling changes will reset the window to its original position and size.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_9">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>40</y>
+       <width>181</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>List entries</string>
+     </property>
+     <widget class="QComboBox" name="cmbo_LWFontSize">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>46</y>
+        <width>41</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Font size for all entries</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_LVfontSize">
+      <property name="geometry">
+       <rect>
+        <x>29</x>
+        <y>50</y>
+        <width>61</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Font size :</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbo_LWspacing">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>86</y>
+        <width>41</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>The spacing between rows</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_LVspacing">
+      <property name="geometry">
+       <rect>
+        <x>34</x>
+        <y>90</y>
+        <width>61</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Spacing :</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Inspection 1</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>581</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Allowed Extensions</string>
+     </property>
+     <widget class="QLineEdit" name="le_AllowedExts">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>50</y>
+        <width>441</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Only files with these extensions are inspected</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>90</y>
+        <width>491</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Example: mkv;avi;mp4;mp3      (Leave empty for All Files)</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbo_ExtsPresets">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>50</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Select a predefined setting</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_8">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>190</y>
+       <width>321</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>The result is positive if any of these hashes is found in the filename.</string>
+     </property>
+     <property name="title">
+      <string>Hash Functions</string>
+     </property>
+     <widget class="QCheckBox" name="cb_HashF_MD5">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>82</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>MDS</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_HashF_SHA1">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>82</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SHA1</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_HashF_SHA256">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>82</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SHA256</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_HashF_SHA512">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>40</y>
+        <width>82</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SHA512</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_HashF_SHA3256">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>60</y>
+        <width>82</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SHA3-256</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_HashF_SHA3512">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>80</y>
+        <width>82</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SHA3-512</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_12">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>190</y>
+       <width>241</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Hash format</string>
+     </property>
+     <widget class="QRadioButton" name="rb_HFignoreCase">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>96</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ignore case</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_HFuppercase">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>121</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Uppercase only</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_HFlowercase">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>141</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Lowercase only</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>Inspection 2</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>281</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Troubleshooting on hash not found (red)</string>
+     </property>
+     <widget class="QRadioButton" name="rb_HNFnothing">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>96</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>No tooltip</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_HNFpath">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>141</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Path as tooltip *</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_HNFpathFilename">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>191</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Path and filename as tooltip *</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rb_HNFdoubleClick">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>100</y>
+        <width>231</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Double-click to open folder location</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>211</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>* Click the entry to copy its tooltip to the clipboard</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_10">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>40</y>
+       <width>281</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Advanced</string>
+     </property>
+     <widget class="QCheckBox" name="cb_ShowScanPath">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>151</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Displays the currently inspected path as a separate entry</string>
+      </property>
+      <property name="text">
+       <string>Show scanning path</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_ShowCompHash">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>231</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Display calculated hash separately if not found in the filename</string>
+      </property>
+      <property name="text">
+       <string>Show computed hash on mismatch</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_IncludeSubf">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>80</y>
+        <width>141</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Search selected directory including subfolders</string>
+      </property>
+      <property name="text">
+       <string>Include subfolders</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_ShowIcons">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>100</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Show status icons, such as the red arrow for files with missing hashes</string>
+      </property>
+      <property name="text">
+       <string>Show icons</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_6">
+    <attribute name="title">
+     <string>Filter</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_11">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>571</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Files and directories to exclude</string>
+     </property>
+     <widget class="QPlainTextEdit" name="pte_ExcludePat">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>50</y>
+        <width>261</width>
+        <height>191</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_EPclear">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>50</y>
+        <width>80</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_EPdefault">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>80</y>
+        <width>80</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Default</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Auto</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>571</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Auto-stop  (0 = off)</string>
+     </property>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>49</y>
+        <width>61</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop after</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="sb_AutoStopMM">
+      <property name="geometry">
+       <rect>
+        <x>95</x>
+        <y>44</y>
+        <width>61</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>49</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>hash mismatches</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>84</y>
+        <width>121</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop after inspecting</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="sb_AutoStopAI">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>79</y>
+        <width>81</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>99999</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>256</x>
+        <y>83</y>
+        <width>31</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>files</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_7">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>190</y>
+       <width>571</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Auto-clear</string>
+     </property>
+     <widget class="QCheckBox" name="cb_ResetContents">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>301</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset contents before starting</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Priority</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>581</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Priority settings</string>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>54</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CPU :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbo_PrioCPU">
+      <property name="geometry">
+       <rect>
+        <x>89</x>
+        <y>46</y>
+        <width>72</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>21</x>
+        <y>88</y>
+        <width>54</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>I/O :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbo_PrioIO">
+      <property name="geometry">
+       <rect>
+        <x>89</x>
+        <y>84</y>
+        <width>72</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>88</y>
+        <width>341</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Idle: Minimizes system impact during heavy disk operations</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_RootPrivRequired">
+      <property name="geometry">
+       <rect>
+        <x>179</x>
+        <y>50</y>
+        <width>341</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Root privileges required</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>rb_InstanceMulti</tabstop>
+  <tabstop>rb_InstanceSingle</tabstop>
+  <tabstop>cb_SaveWindowsPS</tabstop>
+  <tabstop>cb_FDsaveLastDir</tabstop>
+  <tabstop>cb_FDsavePosSize</tabstop>
+  <tabstop>pb_Default</tabstop>
+  <tabstop>pb_Cancel</tabstop>
+  <tabstop>pb_Save</tabstop>
+  <tabstop>rb_WhiteTheme</tabstop>
+  <tabstop>rb_DarkTheme</tabstop>
+  <tabstop>dsb_UIscalingFactor</tabstop>
+  <tabstop>cb_ShowTooltips</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pb_Cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>AppSettings</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>430</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>416</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
