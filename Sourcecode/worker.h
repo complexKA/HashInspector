@@ -7,6 +7,7 @@
 #include <QColor>
 #include <QElapsedTimer>
 #include <QDir>
+#include <qregularexpression.h>
 
 
 
@@ -31,10 +32,11 @@ public slots:
 
         CMI.iInspectCounter++;      // Count along
 
-        int           iSuccessCount = 0, iErrorCount = 0;
+        int           iSuccessCount = 0, iErrorCount = 0, iSkippedCount = 0;
         QStringList   slNameFilters;
         QString       sLastDirectory;
-        QElapsedTimer timer;  timer.start();    // Start the timer
+        QElapsedTimer timerDuration;    timerDuration.start();
+        QElapsedTimer lastUpdateTimer;  lastUpdateTimer.start();
 
         for( const QString &sExt : m_filter.split(';', Qt::SkipEmptyParts) )  {
 
@@ -103,7 +105,7 @@ public slots:
         emit messageLogged( "-----------------------------------", __getSysTXTcolor() );
 
 
-        ///////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// Processing loop
 
         QDirIterator::IteratorFlags itFlags = CMI.bIncludeSubf ? QDirIterator::Subdirectories : QDirIterator::NoIteratorFlags;
@@ -131,8 +133,21 @@ public slots:
             // Prevents files without a period or file extension from slipping through
             if ( !m_filter.isEmpty() && xFileInfo.suffix().isEmpty() )  continue;
 
-            // Filter
-            if ( __filter(lFilterList,xFileInfo) == false )  continue;
+            // Filter 1 und 2
+            if ( __filter1(lFilterList,xFileInfo) == false || __filter2(xFileInfo.completeBaseName()) == false )  {
+
+               iSkippedCount++;
+
+               // Send an update every 100 ms
+               if ( lastUpdateTimer.hasExpired(100) )  {
+
+                    emit counterUpdate( iSuccessCount, iErrorCount, iSkippedCount );
+                    lastUpdateTimer.restart();
+
+                }
+                continue;
+
+            }
 
             // If desired, display the path information in the ListWidget
             if ( CMI.bShowScanPath == true )  {
@@ -236,7 +251,7 @@ public slots:
                         else  iSuccessCount++;
 
                         // Change the color of the item and send the result
-                        emit hashResultReady( bFound, iSuccessCount, iErrorCount, sPurePath, sFinalHash );
+                        emit hashResultReady( bFound, iSuccessCount, iErrorCount, iSkippedCount, sPurePath, sFinalHash );
 
                 }   // if !m_abort
 
@@ -253,13 +268,13 @@ public slots:
 
         }   // while
 
-        ////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         ///////////////////////////
         /// Reporting of results
 
-        qint64  qiMsec = timer.elapsed();
+        qint64  qiMsec = timerDuration.elapsed();
         QString sFormattedTime;
 
         if ( qiMsec < 1000 )  sFormattedTime = "< 1 second";
@@ -275,17 +290,18 @@ public slots:
         if ( iSuccessCount + iErrorCount == 0 && !bAbortSignal )  emit messageLogged( "Sorry, no matches", Qt::red );
         emit messageLogged( "-------------------------", __getSysTXTcolor() );
         emit messageLogged( QString("Inspection runtime: %1").arg(sFormattedTime), __getSysTXTcolor() );
-        emit messageLogged( QString("Hash found: %1, not found: %2").arg(iSuccessCount).arg(iErrorCount), __getSysTXTcolor() );
+        emit messageLogged( QString("Hash found: %1, not found: %2, skippend: %3").arg(iSuccessCount).arg(iErrorCount).arg(iSkippedCount), __getSysTXTcolor() );
 
         emit finished( iSuccessCount, iErrorCount );
     }
 
 signals:
 
-    void messageLogged( QString, QColor, bool bIcon = false );
-    void fileInProgress( QString );
-    void fileHashProgress( int );
-    void hashResultReady( bool, int, int, QString, QString );
+    void messageLogged( const QString, const QColor, const bool bIcon = false );
+    void fileInProgress( const QString );
+    void fileHashProgress( const int );
+    void counterUpdate( const int, const int, const int );
+    void hashResultReady( const bool, const int, const int, const int, const QString, const QString );
 
     void fileProcessed( QString, bool );
     void finished( int, int );
@@ -297,8 +313,14 @@ private:
     QString m_filter;
     std::atomic<bool> bAbortSignal;
 
-    // This feature uses lFilterList to filter out unwanted files and folders
-    bool __filter( const QStringList &lFilterList, const QFileInfo xFileInfo )  {
+    ////////////////////////////////////////////////
+    ///
+    ///   FILTER
+    ///
+    ////////////////////////////////////////////////
+
+    // Filter 1: This feature uses lFilterList to filter out unwanted files and folders
+    bool __filter1( const QStringList &lFilterList, const QFileInfo xFileInfo )  {
 
             // Standardize path
             QString sPath = QDir::fromNativeSeparators( xFileInfo.absoluteFilePath().toLower() );
@@ -334,6 +356,31 @@ private:
 
     }   // __filter
 
+
+    // Filter 2: Checks whether a filename can contain a hash at all
+    bool __filter2( const QString sBaseFileName )  {
+
+        // We're building a pattern that searches for specific lengths.
+        // \b ensures that the hash is positioned at a word boundary (space, period, start/end).
+        // {32} etc. defines the exact number of characters.
+
+        QStringList slPatterns;
+        if ( CMI.bHashF_MD5                          )  slPatterns << "[0-9a-fA-F]{32}";
+        if ( CMI.bHashF_SHA1                         )  slPatterns << "[0-9a-fA-F]{40}";
+        if ( CMI.bHashF_SHA256 || CMI.bHashF_SHA3256 )  slPatterns << "[0-9a-fA-F]{64}";
+        if ( CMI.bHashF_SHA512 || CMI.bHashF_SHA3512 )  slPatterns << "[0-9a-fA-F]{128}";
+
+        if ( slPatterns.isEmpty() ) return false;
+
+        // Wir verbinden die Muster mit einem "ODER" (|) und setzen Wortgrenzen (\b) davor und danach.
+        // Das \b erkennt Leerzeichen, Punkte und String-Grenzen automatisch korrekt.
+        QString sFinalPattern = "\\b(" + slPatterns.join( "|" ) + ")\\b";
+
+        static QRegularExpression re;
+        re.setPattern( sFinalPattern );
+
+        return re.match( sBaseFileName ).hasMatch();
+    }
 
     // Help function for process()
     QString __getHashAlgoName( QCryptographicHash::Algorithm algo )  {

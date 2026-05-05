@@ -227,7 +227,7 @@ public:
 
         s.endGroup();
 
-        // Last paths, etc.
+        // Counter
         s.beginGroup( "Counter" );
 
             s.setValue( "StartCounter",    iStartCounter    );
@@ -238,13 +238,13 @@ public:
         // General section
         //s.beginGroup( "General" );
 
-            if ( dScaleAtLoad != dUIscalingFactor )  s.setValue( "ResetWposSize", true );
-            else  s.setValue( "ResetWposSize", false );
-
             s.setValue( "SingleInstance",  iInstance        );        // Radio buttons
             s.setValue( "SaveWindowsPS",   bSaveWindowsPS   );        // Checkbox Main window position and size
             s.setValue( "FDsaveLastDir",   bFDsaveLastDir   );        // Checkbox Last directory
             s.setValue( "FDsavePosSize",   bFDsavePosSize   );        // Checkbox Save File Dialog position and size
+
+            if ( dScaleAtLoad != dUIscalingFactor )  s.setValue( "ResetWposSize", true );
+            else  s.setValue( "ResetWposSize", false );
 
         //s.endGroup();
 

@@ -516,12 +516,26 @@ void MainWindow::__removeGreen( void )  {
 
 
 
+// All red entries in the ListWidget should be deleted
+void MainWindow::__removeRed( void )  {
+
+    for( int i = ui->listWidget->count() - 1; i >= 0; --i )  {
+
+            QListWidgetItem *xItem = ui->listWidget->item(i);
+            if ( xItem->foreground().color() == Qt::red)  delete ui->listWidget->takeItem( i );
+
+    }
+
+}
+
+
+
 
 // ------------------------------------------------ Specifically for Status 1 ------------------------------------------------
 
 
 // Trim the text on the left until it fits
-QString MainWindow::__clipTextLeft(const QString &sFullText, int iMaxWidth)  {
+QString MainWindow::__clipTextLeft( const QString &sFullText, int iMaxWidth )  {
 
     // Remove HTML for measurement
     QTextDocument doc;
@@ -599,7 +613,7 @@ void MainWindow::setHIstatus1Text( const QString &sText )  {
 ////////////////////////////////////////////////
 
 // Slot for standard log messages
-void MainWindow::__onMessageLogged( QString sMessage, QColor xColor, bool bIcon )  {
+void MainWindow::__onMessageLogged( const QString sMessage, const QColor xColor, const bool bIcon )  {
 
     QListWidgetItem *xItem = new QListWidgetItem( sMessage );
     xItem->setForeground( xColor );
@@ -612,7 +626,7 @@ void MainWindow::__onMessageLogged( QString sMessage, QColor xColor, bool bIcon 
 }
 
 // Slot: File is being edited
-void MainWindow::__onFileInProgress( QString sFileName )  {
+void MainWindow::__onFileInProgress( const QString sFileName )  {
 
     xCurrentItem = new QListWidgetItem( sFileName );
     xCurrentItem->setForeground( __getPreviewColor() );
@@ -622,16 +636,31 @@ void MainWindow::__onFileInProgress( QString sFileName )  {
 }
 
 // Progress indicator during hash calculation
-void MainWindow::__onFileHashProgress( int iPercent )  {
+void MainWindow::__onFileHashProgress( const int iPercent )  {
 
     ui->label_HIstatus2->setText( QString("Computing Hash... %1%").arg(iPercent) );
 
 }
 
-// Slot: The hash has been calculated and found in the filename
-void MainWindow::__onHashResultReady( bool bSuccess, int iSuccessCount, int iErrorCount, QString sAbsoluteFilePath, QString sHashes )  {
+// Slot: Update the counters in the top-right corner
+void MainWindow::__onCounterUpdate( const int iSuccessCount, const int iErrorCount, const int iSkippedCount )  {
 
-    ui->label_HIstatus2->clear();
+    setHIstatus1Text( QString("%1 — <span style='color:rgb(0,149,230);'><b>Ok: %2&nbsp;&nbsp;&nbsp;&nbsp;Fail: %3&nbsp;&nbsp;&nbsp;&nbsp;Skip: %4</b></span>")
+                              .arg(CMI.sLastOpenDir)
+                              .arg(iSuccessCount)
+                              .arg(iErrorCount)
+                              .arg(iSkippedCount)
+                    );
+
+}
+
+// Slot: The hash has been calculated and found in the filename
+void MainWindow::__onHashResultReady( const bool bSuccess,
+                                      const int iSuccessCount, const int iErrorCount, const int iSkippedCount,
+                                      const QString sAbsoluteFilePath,
+                                      const QString sHashes
+                                    )
+{   ui->label_HIstatus2->clear();
 
     if ( xCurrentItem)  {
 
@@ -677,18 +706,12 @@ void MainWindow::__onHashResultReady( bool bSuccess, int iSuccessCount, int iErr
 
               }
 
-        // Status
-        if ( iErrorCount == 0 )
-        setHIstatus1Text( QString("%1 — <span style='color:rgb(0,149,230);'><b>%2</b></span>")
-                                  .arg(CMI.sLastOpenDir)
-                                  .arg(iSuccessCount)
-                        );
-
-        else
-        setHIstatus1Text( QString("%1 — <span style='color:rgb(0,149,230);'><b>%2 / %3</b></span>")
+        // Display status
+        setHIstatus1Text( QString("%1 — <span style='color:rgb(0,149,230);'><b>Ok: %2&nbsp;&nbsp;&nbsp;&nbsp;Fail: %3&nbsp;&nbsp;&nbsp;&nbsp;Skip: %4</b></span>")
                                   .arg(CMI.sLastOpenDir)
                                   .arg(iSuccessCount)
                                   .arg(iErrorCount)
+                                  .arg(iSkippedCount)
                         );
 
     }
@@ -696,7 +719,7 @@ void MainWindow::__onHashResultReady( bool bSuccess, int iSuccessCount, int iErr
 }
 
 // Slot: The inspection is complete
-void MainWindow::__onFinished( QThread *thread, int iSuccessCount, int iErrorCount )  {
+void MainWindow::__onFinished( QThread *thread, const int iSuccessCount, const int iErrorCount )  {
 
     // Turn buttons on or off, enable or disable them
     ui->pb_Open->setEnabled( true );
@@ -713,57 +736,62 @@ void MainWindow::__onFinished( QThread *thread, int iSuccessCount, int iErrorCou
     // End the thread
     thread->quit();
 
-    ///////////////////////////
-    /// "Remove green entries" - Button
-    if ( iSuccessCount <= 10 || iErrorCount == 0 )  {  //QMessageBox::about( 0, "Mein Titel", QString("iGreen: %1    iRed: %2").arg(iGreen).arg(iRed) );
-                                                       ui->listWidget->scrollToBottom();
-                                                       return;
-                                                    }
-
     // Spacer
     QListWidgetItem *xSpacer = new QListWidgetItem( ui->listWidget );
-    xSpacer->setFlags( Qt::NoItemFlags );   // Disables the ability to select and focus
-    xSpacer->setSizeHint( QSize(0, 7) );    // 7 pixels high
+    xSpacer->setFlags( Qt::NoItemFlags );
+    xSpacer->setSizeHint( QSize(0, 7) );
 
-    // Create the item for the list
-    QListWidgetItem *xButtonItem = new QListWidgetItem(ui->listWidget);
-
-    // Create a container widget and layout
+    // Create a container for the buttons
+    QListWidgetItem *xButtonItem = new QListWidgetItem( ui->listWidget );
     QWidget *xContainer = new QWidget();
-    QHBoxLayout *layout = new QHBoxLayout( xContainer );
+    QHBoxLayout *layout = new QHBoxLayout(xContainer);
 
-    // Create widgets for the content
-    QPushButton *xButton = new QPushButton( "&Remove green entries" );
+    // Create the buttons
+    QPushButton *xButtonG = new QPushButton( "&Remove green entries" );
+    QPushButton *xButtonR = new QPushButton( "R&emove red entries" );
 
-    // Keep the button narrow so it doesn't take up the entire line
-    xButton->setFixedWidth( 160 );
+    xButtonG->setFixedWidth( 150 );
+    xButtonR->setFixedWidth( 140 );
 
-    // Add widgets to the layout
-    layout->addWidget( xButton );
-    layout->addStretch();       // Moves the text and button to the left together
+    // Place both buttons in the SAME layout
+    layout->addWidget( xButtonG );
+    layout->addWidget( xButtonR );
+    layout->addStretch();       // Slide both buttons to the left
 
-    // Minimize spacing in the layout so that it fits on the line
+    // Optimize spacing
     layout->setContentsMargins( 5, 2, 5, 4 );
+    layout->setSpacing( 5 );    // Distance between the two buttons
 
-    // Set the layout for the container and add it to the list
+    // Assign the container to the item
     xContainer->setLayout( layout );
-    xButtonItem->setSizeHint( xContainer->sizeHint() );       // IMPORTANT: Adjust line height
+    xButtonItem->setSizeHint( xContainer->sizeHint() );
     ui->listWidget->setItemWidget( xButtonItem, xContainer );
+
     ui->listWidget->scrollToBottom();
 
-    // Signal connection (e.g., via Lambda)
-    connect(xButton, &QPushButton::clicked, [this, xButtonItem, xSpacer]() {
+    // Take counters into account
+    if ( iSuccessCount == 0 )  xButtonG->setEnabled( false );
+    if ( iErrorCount == 0  )   xButtonR->setEnabled( false );
 
-          __removeGreen();              // Delete all green entries
-            delete xButtonItem;         // Also delete the "Remove green entries" button
-            delete xSpacer;
+    // Signal-Connections
+    connect( xButtonG, &QPushButton::clicked, [this, xButtonG]()  {
+
+      __removeGreen();
+        xButtonG->setEnabled( false );
+
+    });
+
+    connect( xButtonR, &QPushButton::clicked, [this, xButtonR]()  {
+
+      __removeRed();
+        xButtonR->setEnabled( false );
 
     });
 
 }
 
 // Primary Job Function
-void MainWindow::doTheWork( QString sPath )  {
+void MainWindow::doTheWork( const QString sPath )  {
 
     // Turn buttons on or off, enable or disable them
     ui->pb_Open->setEnabled( false );
@@ -791,6 +819,7 @@ void MainWindow::doTheWork( QString sPath )  {
     connect( worker, &HashWorker::messageLogged,    this, &MainWindow::__onMessageLogged    );
     connect( worker, &HashWorker::fileInProgress,   this, &MainWindow::__onFileInProgress   );
     connect( worker, &HashWorker::fileHashProgress, this, &MainWindow::__onFileHashProgress );
+    connect( worker, &HashWorker::counterUpdate,    this, &MainWindow::__onCounterUpdate    );
     connect( worker, &HashWorker::hashResultReady,  this, &MainWindow::__onHashResultReady  );
 
     // Connect the Abort button directly to the worker
@@ -798,9 +827,13 @@ void MainWindow::doTheWork( QString sPath )  {
 
     // Establish a connection to reactivate the Open pushbutton
     // We connect the finished signal of the THREAD to a slot or lambda
-    connect( worker, &HashWorker::finished, this, [this, thread](int iSuccessCount, int iErrorCount) {
+    connect( worker, &HashWorker::finished, this, [this, thread, worker](const int iSuccessCount, const int iErrorCount)  {
 
-        __onFinished( thread, iSuccessCount, iErrorCount );
+        // Disconnect ALL connections from the Abort button so that, on the next startup,
+        // there are no "ghost connections" to old workers.
+        ui->pb_Abort->disconnect( worker );
+
+      __onFinished( thread, iSuccessCount, iErrorCount );
 
     });
 

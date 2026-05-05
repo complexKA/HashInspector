@@ -65,9 +65,8 @@ int main( int argc, char *argv[] )
 
 
     //////////////////////////
-    /// Load settings from the INI file and create the main window
+    /// Create the main window, load settings from the INI file
 
-    // Open the main window
     MainWindow w;  w.show();
     ConfigManager::instance();      // Create a CMI instance, load the INI file
     return a.exec();

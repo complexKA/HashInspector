@@ -63,18 +63,20 @@ private:
     void    __setLWandEntryStyle();
     void    __copyTooltipToClipboard( QListWidgetItem * );
     void    __removeGreen();
+    void    __removeRed();
 
     QString __clipTextLeft( const QString &, int );
     void    __updateLabelDisplay();
     void    resizeEvent( QResizeEvent * ) override;
     void    setHIstatus1Text( const QString &);
 
-    void    __onMessageLogged( QString, QColor, bool bIcon = false );
-    void    __onFileInProgress( QString );
-    void    __onFileHashProgress( int );
-    void    __onHashResultReady( bool, int, int, QString, QString );
-    void    __onFinished( QThread *, int, int );
-    void    doTheWork( QString );
+    void    __onMessageLogged( const QString, const QColor, const bool bIcon = false );
+    void    __onFileInProgress( const QString );
+    void    __onFileHashProgress( const int );
+    void    __onCounterUpdate( const int, const int, const int );
+    void    __onHashResultReady( const bool, const int, const int, const int, const QString, const QString );
+    void    __onFinished( QThread *, const int, const int );
+    void    doTheWork( const QString );
 
 };
 #endif // MAINWINDOW_H
