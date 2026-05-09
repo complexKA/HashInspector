@@ -98,8 +98,11 @@ public slots:
 
         emit messageLogged( QString("Starting inspection of:  %1").arg(m_path), __getSysTXTcolor(), true );
 
-        if ( CMI.sAllowedExts.isEmpty() )  emit messageLogged( "Allowed Extensions:  Empty (All files)", __getSysTXTcolor(), true );
-        else  emit messageLogged( QString("Allowed Extensions:  %1").arg(CMI.sAllowedExts), __getSysTXTcolor(), true );
+        if ( CMI.sAllowedExts.isEmpty() )  emit messageLogged( "Filter 1: Inactive (All files are allowed through)", __getSysTXTcolor(), true );
+        else  emit messageLogged( QString("Filter 1: Active, allowed extensions are %1").arg(CMI.sAllowedExts), __getSysTXTcolor(), true );
+
+        if ( CMI.bFilter2active == true )  emit messageLogged( "Filter 2: Active", __getSysTXTcolor(), true );
+        else  emit messageLogged( "Filter 2: Deactivated", __getSysTXTcolor(), true );
 
         emit messageLogged( QString("Hash Functions:  %1  (%2)").arg(sHashAlgos).arg(sHashFormat), __getSysTXTcolor(), true );
         emit messageLogged( "-----------------------------------", __getSysTXTcolor() );
@@ -110,6 +113,7 @@ public slots:
 
         QDirIterator::IteratorFlags itFlags = CMI.bIncludeSubf ? QDirIterator::Subdirectories : QDirIterator::NoIteratorFlags;
         QDirIterator it( m_path, slNameFilters, QDir::Files | QDir::NoDotAndDotDot, itFlags );
+        bool bResultFilter1, bResultFilter2;
 
         while( it.hasNext() )  {
 
@@ -133,10 +137,17 @@ public slots:
             // Prevents files without a period or file extension from slipping through
             if ( !m_filter.isEmpty() && xFileInfo.suffix().isEmpty() )  continue;
 
-            // Filter 1 und 2
-            if ( __filter1(lFilterList,xFileInfo) == false || __filter2(xFileInfo.completeBaseName()) == false )  {
+            // ------------ Filter 1 and 2 --------------
 
-               iSkippedCount++;
+            bResultFilter1 = __filter1( lFilterList, xFileInfo );      // Filter 1: This feature uses lFilterList to filter out unwanted files and folders
+
+            if ( bResultFilter1 == true && CMI.bFilter2active == true )          // Run Filter 2 only if Filter 1 has not already reported a file to be
+                                                                                 // excluded and the filter has not been disabled
+                  bResultFilter2 = __filter2( xFileInfo.completeBaseName() );    // Filter 2: Checks whether a filename can contain a hash at all
+            else  bResultFilter2 = true;
+
+            // The file is skipped if either of the two filters returns false
+            if ( bResultFilter1 == false || bResultFilter2 == false )  {  iSkippedCount++;
 
                // Send an update every 100 ms
                if ( lastUpdateTimer.hasExpired(100) )  {
@@ -145,9 +156,18 @@ public slots:
                     lastUpdateTimer.restart();
 
                 }
+
+                // Optional: Show skipped files
+                if ( CMI.bShowSkipped == true )  {  if ( bResultFilter1 == false && bResultFilter2 == true )
+                                                    emit messageLogged( QString("Skipped by filter 1:  %1").arg(xFileInfo.fileName()), __getSysTXTcolor() );
+
+                                                    if ( bResultFilter1 == true && bResultFilter2 == false )
+                                                    emit messageLogged( QString("Skipped by filter 2:  %1").arg(xFileInfo.fileName()), __getSysTXTcolor() );
+                                                 }
                 continue;
 
             }
+            // -----------------------------------
 
             // If desired, display the path information in the ListWidget
             if ( CMI.bShowScanPath == true )  {

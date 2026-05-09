@@ -113,9 +113,11 @@ AppSettings::AppSettings( QWidget *parent )
     ui->cb_ShowScanPath->setChecked(      CMI.bShowScanPath    );
     ui->cb_IncludeSubf->setChecked(       CMI.bIncludeSubf     );
     ui->cb_ShowIcons->setChecked(         CMI.bShowIcons       );
+    ui->cb_ShowSkipped->setChecked(       CMI.bShowSkipped     );
 
     // Filter section
     ui->pte_ExcludePat->setPlainText(     CMI.sExcludePat      );
+    ui->cb_Filter2active->setChecked(     CMI.bFilter2active   );
 
     // Auto section
     ui->sb_AutoStopMM->setValue(          CMI.iAutoStopMM      );
@@ -213,9 +215,11 @@ void AppSettings::on_pb_Save_clicked()
     CMI.bShowScanPath    = ui->cb_ShowScanPath->isChecked();
     CMI.bIncludeSubf     = ui->cb_IncludeSubf->isChecked();
     CMI.bShowIcons       = ui->cb_ShowIcons->isChecked();
+    CMI.bShowSkipped     = ui->cb_ShowSkipped->isChecked();
 
     // Filter section
     CMI.sExcludePat      = ui->pte_ExcludePat->toPlainText();
+    CMI.bFilter2active   = ui->cb_Filter2active->isChecked();
 
     // Auto section
     CMI.iAutoStopMM      = ui->sb_AutoStopMM->value();
@@ -269,9 +273,11 @@ void AppSettings::on_pb_Default_clicked()
     ui->cb_ShowScanPath->setChecked( false );
     ui->cb_IncludeSubf->setChecked( true );
     ui->cb_ShowIcons->setChecked( true );
+    ui->cb_ShowScanPath->setChecked( false );
 
     // Filter section
     ui->pte_ExcludePat->setPlainText( FILTER_DEFAULTPAT );
+    ui->cb_Filter2active->setChecked( true );
 
     // Auto section
     ui->sb_AutoStopMM->setValue( OFF );

@@ -97,9 +97,9 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>4</number>
    </property>
-   <widget class="QWidget" name="General">
+   <widget class="QWidget" name="tab_General">
     <attribute name="title">
      <string>General</string>
     </attribute>
@@ -217,7 +217,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_4">
+   <widget class="QWidget" name="tab_Appearance">
     <attribute name="title">
      <string>Appearance</string>
     </attribute>
@@ -448,9 +448,9 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_2">
+   <widget class="QWidget" name="tab_Inspection1">
     <attribute name="title">
-     <string>Inspection 1</string>
+     <string>Inspection</string>
     </attribute>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="geometry">
@@ -651,9 +651,9 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_5">
+   <widget class="QWidget" name="tab_Inspection2">
     <attribute name="title">
-     <string>Inspection 2</string>
+     <string>Inspection</string>
     </attribute>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="geometry">
@@ -812,9 +812,22 @@
        <string>Show icons</string>
       </property>
      </widget>
+     <widget class="QCheckBox" name="cb_ShowSkipped">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>120</y>
+        <width>131</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Show skipped files</string>
+      </property>
+     </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_6">
+   <widget class="QWidget" name="tab_Filter">
     <attribute name="title">
      <string>Filter</string>
     </attribute>
@@ -823,28 +836,28 @@
       <rect>
        <x>30</x>
        <y>40</y>
-       <width>571</width>
+       <width>331</width>
        <height>271</height>
       </rect>
      </property>
      <property name="title">
-      <string>Files and directories to exclude</string>
+      <string>Filter 1: Files and directories to exclude</string>
      </property>
      <widget class="QPlainTextEdit" name="pte_ExcludePat">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>30</x>
         <y>50</y>
-        <width>261</width>
-        <height>191</height>
+        <width>271</width>
+        <height>171</height>
        </rect>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_EPclear">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>50</y>
+        <x>130</x>
+        <y>230</y>
         <width>80</width>
         <height>25</height>
        </rect>
@@ -859,8 +872,8 @@
      <widget class="QPushButton" name="pb_EPdefault">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>80</y>
+        <x>220</x>
+        <y>230</y>
         <width>80</width>
         <height>25</height>
        </rect>
@@ -873,8 +886,50 @@
       </property>
      </widget>
     </widget>
+    <widget class="QGroupBox" name="groupBox_13">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>40</y>
+       <width>221</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Filter 2</string>
+     </property>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>171</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>The second filter excludes files that, based on their length or characters, cannot contain a valid hash of the selected types.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_Filter2active">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>150</y>
+        <width>111</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filter is active</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
-   <widget class="QWidget" name="tab_3">
+   <widget class="QWidget" name="tab_Auto">
     <attribute name="title">
      <string>Auto</string>
     </attribute>
@@ -996,7 +1051,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab">
+   <widget class="QWidget" name="tab_Priority">
     <attribute name="title">
      <string>Priority</string>
     </attribute>

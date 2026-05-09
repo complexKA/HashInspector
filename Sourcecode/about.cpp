@@ -26,6 +26,7 @@ About::About( QWidget *parent )
     // Format the "About" text in all tabs
     ui->textbrowser_about1->setStyleSheet( TEXTBROWSER_CSS );
     ui->textbrowser_about2->setStyleSheet( TEXTBROWSER_CSS );
+    ui->textbrowser_about3->setStyleSheet( TEXTBROWSER_CSS );
 
     // Make sure the first tab opens first
     ui->tabWidget->setCurrentIndex( 0 );
@@ -33,6 +34,7 @@ About::About( QWidget *parent )
     // Links should open in a new browser window
     ui->textbrowser_about1->setOpenExternalLinks( true );
     ui->textbrowser_about2->setOpenExternalLinks( true );
+    ui->textbrowser_about3->setOpenExternalLinks( true );
 
     // Sets the fixed flags: window type, title, system menu, and only the close button
     // Locks the size to the current values (also disables dragging by the corners)

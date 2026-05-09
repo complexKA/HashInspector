@@ -60,8 +60,10 @@ public:
     bool    bShowScanPath    = false;
     bool    bIncludeSubf     = true;
     bool    bShowIcons       = true;
+    bool    bShowSkipped     = false;
 
     QString sExcludePat;                            // Filter section
+    bool    bFilter2active   = true;
 
     int     iAutoStopMM      = OFF;                 // Auto section
     int     iAutoStopAI      = OFF;
@@ -159,6 +161,7 @@ public:
             bShowScanPath    = s.value( "ShowScanPath",    false         ).toBool();
             bIncludeSubf     = s.value( "IncludeSubf",     true          ).toBool();
             bShowIcons       = s.value( "ShowIcons",       true          ).toBool();
+            bShowSkipped     = s.value( "ShowSkipped",     false         ).toBool();
 
         s.endGroup();
 
@@ -166,6 +169,7 @@ public:
         s.beginGroup( "Filter" );
 
             sExcludePat      = s.value( "ExcludePatterns", FILTER_DEFAULTPAT ).toString();      sExcludePat = __max( sExcludePat, 1024 );
+            bFilter2active   = s.value( "Filter2active",   true          ).toBool();
 
         s.endGroup();
 
@@ -281,6 +285,7 @@ public:
             s.setValue( "ShowScanPath",    bShowScanPath    );        // Checkbox Show scanning path
             s.setValue( "IncludeSubf",     bIncludeSubf     );        // Checkbox Include Subfolders
             s.setValue( "ShowIcons",       bShowIcons       );        // Checkbox Show icons
+            s.setValue( "ShowSkipped",     bShowSkipped     );        // Checkbox Show skipped files
 
         s.endGroup();
 
@@ -288,6 +293,7 @@ public:
         s.beginGroup( "Filter" );
 
             s.setValue( "ExcludePatterns", sExcludePat      );
+            s.setValue( "Filter2active",   bFilter2active   );        // Checkbox Filter 2 active
 
         s.endGroup();
 

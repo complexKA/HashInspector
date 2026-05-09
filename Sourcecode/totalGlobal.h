@@ -40,6 +40,7 @@ static const QString HISTATUS_DEFAULT           = "Please click <span style='col
 static const QString HISTATUS_CLIPBOARD         = "<span style='color:rgb(0,149,230);'><b>Copied to clipboard</b></span>";
 
 static int ICONSIZE                             = 15;
+static int WORKER_HEADER_LINES                  = 5;
 
 static const QString FILTER_DEFAULTPAT =        "*/.trash-*/\n"
                                                 "desktop.ini\n"

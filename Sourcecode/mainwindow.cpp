@@ -747,8 +747,8 @@ void MainWindow::__onFinished( QThread *thread, const int iSuccessCount, const i
     QHBoxLayout *layout = new QHBoxLayout(xContainer);
 
     // Create the buttons
-    QPushButton *xButtonG = new QPushButton( "&Remove green entries" );
-    QPushButton *xButtonR = new QPushButton( "R&emove red entries" );
+    QPushButton *xButtonG = new QPushButton( "Remove &green entries" );
+    QPushButton *xButtonR = new QPushButton( "Remove &red entries" );
 
     xButtonG->setFixedWidth( 150 );
     xButtonR->setFixedWidth( 140 );
@@ -1053,7 +1053,7 @@ void MainWindow::on_pb_Export_clicked()
 
         file.close(); // Datei schließen
 
-        QMessageBox::about( 0, "Success", QString("%1 lines written to<br>%2").arg(iWrittenLN + 4).arg(sSelectedFile) );
+        QMessageBox::about( 0, "Success", QString("%1 lines written to<br>%2").arg(iWrittenLN + WORKER_HEADER_LINES).arg(sSelectedFile) );
 
         // Save the last directory for the next time
         CMI.sLastExportDir = QFileInfo( sSelectedFile ).absolutePath();
