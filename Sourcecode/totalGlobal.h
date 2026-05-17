@@ -65,7 +65,7 @@ extern QString __getSettingsPath();
 
 extern QColor __getSysTXTcolor();
 extern QColor __getPreviewColor();
-extern QColor __getHashFountColor();
+extern QColor __getHashFoundColor();
 extern QColor __getDCbackgroundColor();
 
 

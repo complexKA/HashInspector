@@ -26,8 +26,6 @@ public:
     MainWindow( QWidget *parent = nullptr );
     ~MainWindow();
 
-    void resetMainWindowPosSize();
-
 protected:
     void contextMenuEvent( QContextMenuEvent *xEvent ) override {
         // Right-clicking on the toolbar allows you to disable the tools.
@@ -57,15 +55,16 @@ private:
     int              iLastSettingsTab = 0;
     QListWidgetItem *xCurrentItem     = nullptr;
 
+    void    __resetMainWindowPosSize();
     void    __setGeomentry();
-    void    __setTheme( int );
+    void    __setTheme( const int );
     void    __setCurrentPriority();
     void    __setLWandEntryStyle();
     void    __copyTooltipToClipboard( QListWidgetItem * );
     void    __removeGreen();
     void    __removeRed();
 
-    QString __clipTextLeft( const QString &, int );
+    QString __clipTextLeft( const QString &, const int );
     void    __updateLabelDisplay();
     void    resizeEvent( QResizeEvent * ) override;
     void    setHIstatus1Text( const QString &);

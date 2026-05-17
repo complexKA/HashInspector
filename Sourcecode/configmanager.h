@@ -61,6 +61,7 @@ public:
     bool    bIncludeSubf     = true;
     bool    bShowIcons       = true;
     bool    bShowSkipped     = false;
+    bool    bShowTimes       = false;
 
     QString sExcludePat;                            // Filter section
     bool    bFilter2active   = true;
@@ -162,6 +163,7 @@ public:
             bIncludeSubf     = s.value( "IncludeSubf",     true          ).toBool();
             bShowIcons       = s.value( "ShowIcons",       true          ).toBool();
             bShowSkipped     = s.value( "ShowSkipped",     false         ).toBool();
+            bShowTimes       = s.value( "ShowTimes",       false         ).toBool();
 
         s.endGroup();
 
@@ -190,8 +192,8 @@ public:
 
         s.endGroup();
 
-        // Sonstiges
-        dScaleAtLoad = dUIscalingFactor;        // ScalingFactor zum Start merken
+        // Miscellaneous
+        dScaleAtLoad = dUIscalingFactor;        // Remember the scaling factor at the start
 
     }
 
@@ -286,6 +288,7 @@ public:
             s.setValue( "IncludeSubf",     bIncludeSubf     );        // Checkbox Include Subfolders
             s.setValue( "ShowIcons",       bShowIcons       );        // Checkbox Show icons
             s.setValue( "ShowSkipped",     bShowSkipped     );        // Checkbox Show skipped files
+            s.setValue( "ShowTimes",       bShowTimes       );        // Checkbox Show start and end times
 
         s.endGroup();
 

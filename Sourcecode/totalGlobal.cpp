@@ -39,7 +39,7 @@ QColor __getPreviewColor()  {
 }
 
 // Helper function: Set the text color for "Hash found" for the current theme
-QColor __getHashFountColor()  {
+QColor __getHashFoundColor()  {
 
     if ( CMI.iTheme == RADIOBUTTON_1 )  return LW_HASHFOUND_COLOR_DARK;
     else  return LW_HASHFOUND_COLOR_WHITE;

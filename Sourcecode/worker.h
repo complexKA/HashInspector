@@ -10,12 +10,11 @@
 #include <qregularexpression.h>
 
 
-
 class HashWorker : public QObject {
     Q_OBJECT
 public:
     explicit HashWorker( const QString &path, const QString &sFilter )
-        : m_path(path), m_filter(sFilter), bAbortSignal(false) {}
+        : m_path( path ), m_filter( sFilter ), bAbortSignal(false) {}
 
     // Cancel function
     void __abort() { bAbortSignal = true; }
@@ -37,6 +36,7 @@ public slots:
         QString       sLastDirectory;
         QElapsedTimer timerDuration;    timerDuration.start();
         QElapsedTimer lastUpdateTimer;  lastUpdateTimer.start();
+        QLocale       usLocale( QLocale::English, QLocale::UnitedStates );
 
         for( const QString &sExt : m_filter.split(';', Qt::SkipEmptyParts) )  {
 
@@ -46,7 +46,7 @@ public slots:
 
 
         ///////////////////////////
-        /// Prepare the filter
+        /// Prepare filter 1
         QStringList lFilterList = CMI.sExcludePat.split( '\n', Qt::SkipEmptyParts );
 
         for( QString &sLine : lFilterList )  {
@@ -98,14 +98,18 @@ public slots:
 
         emit messageLogged( QString("Starting inspection of:  %1").arg(m_path), __getSysTXTcolor(), true );
 
-        if ( CMI.sAllowedExts.isEmpty() )  emit messageLogged( "Filter 1: Inactive (All files are allowed through)", __getSysTXTcolor(), true );
-        else  emit messageLogged( QString("Filter 1: Active, allowed extensions are %1").arg(CMI.sAllowedExts), __getSysTXTcolor(), true );
+        if ( CMI.sExcludePat.isEmpty() )  emit messageLogged( "Filter 1: Inactive, all files are scanned", __getSysTXTcolor(), true );
+        else  emit messageLogged("Filter 1: Active, some directories and files are not scanned", __getSysTXTcolor(), true );
 
-        if ( CMI.bFilter2active == true )  emit messageLogged( "Filter 2: Active", __getSysTXTcolor(), true );
+        if ( CMI.bFilter2active == true )  emit messageLogged( "Filter 2: File length and the characters that make up the filename are analyzed.", __getSysTXTcolor(), true );
         else  emit messageLogged( "Filter 2: Deactivated", __getSysTXTcolor(), true );
 
         emit messageLogged( QString("Hash Functions:  %1  (%2)").arg(sHashAlgos).arg(sHashFormat), __getSysTXTcolor(), true );
         emit messageLogged( "-----------------------------------", __getSysTXTcolor() );
+
+        if ( CMI.bShowTimes == true )  {  QString sTimestamp = usLocale.toString( QDateTime::currentDateTime(), "MMMM dd, yyyy - HH:mm:ss" );
+                                          emit messageLogged( "Started at: " + sTimestamp, __getSysTXTcolor() );
+                                       }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,6 +312,11 @@ public slots:
         }
 
         if ( iSuccessCount + iErrorCount == 0 && !bAbortSignal )  emit messageLogged( "Sorry, no matches", Qt::red );
+
+        if ( CMI.bShowTimes == true )  {  QString sTimestamp = usLocale.toString( QDateTime::currentDateTime(), "MMMM dd, yyyy - HH:mm:ss" );
+                                          emit messageLogged( "Finished at: " + sTimestamp, __getSysTXTcolor() );
+                                       }
+
         emit messageLogged( "-------------------------", __getSysTXTcolor() );
         emit messageLogged( QString("Inspection runtime: %1").arg(sFormattedTime), __getSysTXTcolor() );
         emit messageLogged( QString("Hash found: %1, not found: %2, skippend: %3").arg(iSuccessCount).arg(iErrorCount).arg(iSkippedCount), __getSysTXTcolor() );
@@ -374,7 +383,7 @@ private:
 
             return true;
 
-    }   // __filter
+    }   // __filter1
 
 
     // Filter 2: Checks whether a filename can contain a hash at all

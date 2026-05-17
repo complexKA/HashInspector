@@ -49,6 +49,9 @@ About::~About()
 }
 
 
+// -------------------------------------------- Buttons --------------------------------------------------------
+
+
 void About::on_pb_aboutQt_clicked()
 {
     QMessageBox::aboutQt( this, "Über Qt" );

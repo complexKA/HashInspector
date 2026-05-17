@@ -33,9 +33,6 @@ MainWindow::MainWindow( QWidget *parent )
     ui->setupUi( this );
 
 
-    // Set an icon for Cinnamon
-    setWindowIcon( QIcon(":/images/HashInspector-Logo.png") );
-
     // Insert logo from the resource
     QPixmap picLogo( ":/images/HashInspector-Logo.png" );
     ui->label_mainLogo->setPixmap( picLogo.scaled(45,45,Qt::KeepAspectRatio, Qt::SmoothTransformation) );
@@ -101,7 +98,7 @@ MainWindow::MainWindow( QWidget *parent )
     ui->pb_Abort->setVisible( false );
 
     // A flag indicates that the scaling has changed since the last launch: reset the window
-    if ( CMI.bResetWposSize == true )  resetMainWindowPosSize();
+    if ( CMI.bResetWposSize == true )  __resetMainWindowPosSize();
 
 
     //////////////////////////////
@@ -177,7 +174,7 @@ void MainWindow::showEvent( QShowEvent *event ) {
 
 
 // Resets the position and size of the main window to their default values
-void MainWindow::resetMainWindowPosSize( void )  {
+void MainWindow::__resetMainWindowPosSize( void )  {
 
     // Determine the primary display
     QScreen *xPrimaryScreen = QGuiApplication::primaryScreen();
@@ -190,6 +187,7 @@ void MainWindow::resetMainWindowPosSize( void )  {
 
     // Move window
     this->move( rectScreenGeometry.left() + 100, rectScreenGeometry.top() + 100 );
+
 }
 
 
@@ -207,7 +205,7 @@ void MainWindow::__setGeomentry( void )  {
 
     // Set window size or default
     if ( !geo.isEmpty() )  restoreGeometry( geo );       // Restore saved dimensions and position
-    else  resetMainWindowPosSize();                     // Resets the position and size of the main window to their default values
+    else  __resetMainWindowPosSize();                   // Resets the position and size of the main window to their default values
 
     // IMPORTANT: After calling setWindowFlags, we must call show()
     // to make the window visible again
@@ -219,7 +217,7 @@ void MainWindow::__setGeomentry( void )  {
 
 
 // Set White Mode or Dark Mode
-void MainWindow::__setTheme( int iTheme ) {
+void MainWindow::__setTheme( const int iTheme ) {
 
     if ( iTheme == RADIOBUTTON_1 )  {
 
@@ -505,6 +503,8 @@ void MainWindow::__removeGreen( void )  {
     for( int i = ui->listWidget->count() - 1; i >= 0; --i )  {
 
             QListWidgetItem *xItem = ui->listWidget->item(i);
+            if ( !xItem ) continue;     // Security check
+
             if ( xItem->foreground().color() == LW_HASHFOUND_COLOR_DARK || xItem->foreground().color() == LW_HASHFOUND_COLOR_WHITE)  {
 
                 delete ui->listWidget->takeItem( i );
@@ -522,6 +522,8 @@ void MainWindow::__removeRed( void )  {
     for( int i = ui->listWidget->count() - 1; i >= 0; --i )  {
 
             QListWidgetItem *xItem = ui->listWidget->item(i);
+            if ( !xItem ) continue;     // Security check
+
             if ( xItem->foreground().color() == Qt::red)  delete ui->listWidget->takeItem( i );
 
     }
@@ -534,8 +536,9 @@ void MainWindow::__removeRed( void )  {
 // ------------------------------------------------ Specifically for Status 1 ------------------------------------------------
 
 
+
 // Trim the text on the left until it fits
-QString MainWindow::__clipTextLeft( const QString &sFullText, int iMaxWidth )  {
+QString MainWindow::__clipTextLeft( const QString &sFullText, const int iMaxWidth )  {
 
     // Remove HTML for measurement
     QTextDocument doc;
@@ -662,15 +665,15 @@ void MainWindow::__onHashResultReady( const bool bSuccess,
                                     )
 {   ui->label_HIstatus2->clear();
 
-    if ( xCurrentItem)  {
+    if ( xCurrentItem )  {
 
         QString sFileName = xCurrentItem->text();
 
         // Set the color
-        xCurrentItem->setForeground( bSuccess ? __getHashFountColor() : Qt::red );
+        xCurrentItem->setForeground( bSuccess ? __getHashFoundColor() : Qt::red );
 
         // If successful, prefix with [OK]; if an error occurs, display the path in the tooltip
-        if ( bSuccess )  xCurrentItem->setText( "[OK] " + xCurrentItem->text() );
+        if ( bSuccess )  {  if ( CMI.bShowIcons == true )  xCurrentItem->setIcon( QIcon(":/images/Checkmark.png") );  }
         else  {  // Optionally, include the path or the path and filename in the tooltip
                  switch( CMI.iOnHashNotFound )
                         {
@@ -702,7 +705,7 @@ void MainWindow::__onHashResultReady( const bool bSuccess,
                 }
 
                 // Set icon
-                if ( CMI.bShowIcons == true )  xCurrentItem->setIcon( QIcon(":/images/RedArrow.png") );
+                if ( CMI.bShowIcons == true )  xCurrentItem->setIcon( QIcon(":/images/RedX.png") );
 
               }
 
@@ -776,15 +779,15 @@ void MainWindow::__onFinished( QThread *thread, const int iSuccessCount, const i
     // Signal-Connections
     connect( xButtonG, &QPushButton::clicked, [this, xButtonG]()  {
 
-      __removeGreen();
-        xButtonG->setEnabled( false );
+          __removeGreen();
+            xButtonG->setEnabled( false );
 
     });
 
     connect( xButtonR, &QPushButton::clicked, [this, xButtonR]()  {
 
-      __removeRed();
-        xButtonR->setEnabled( false );
+          __removeRed();
+            xButtonR->setEnabled( false );
 
     });
 
@@ -829,11 +832,11 @@ void MainWindow::doTheWork( const QString sPath )  {
     // We connect the finished signal of the THREAD to a slot or lambda
     connect( worker, &HashWorker::finished, this, [this, thread, worker](const int iSuccessCount, const int iErrorCount)  {
 
-        // Disconnect ALL connections from the Abort button so that, on the next startup,
-        // there are no "ghost connections" to old workers.
-        ui->pb_Abort->disconnect( worker );
+            // Disconnect ALL connections from the Abort button so that, on the next startup,
+            // there are no "ghost connections" to old workers.
+            ui->pb_Abort->disconnect( worker );
 
-      __onFinished( thread, iSuccessCount, iErrorCount );
+          __onFinished( thread, iSuccessCount, iErrorCount );
 
     });
 
@@ -991,7 +994,7 @@ void MainWindow::on_pb_Clear_clicked()
 }
 
 
-
+// Export the contents of the ListView to a text file
 void MainWindow::on_pb_Export_clicked()
 {
     QString sSelectedFile = "";
@@ -1036,11 +1039,11 @@ void MainWindow::on_pb_Export_clicked()
         int         iWrittenLN = 0;
 
         QLocale     usLocale( QLocale::English, QLocale::UnitedStates );
-        QString     xTimestamp = usLocale.toString( QDateTime::currentDateTime(), "MMMM dd, yyyy - HH:mm:ss" );
+        QString     sTimestamp = usLocale.toString( QDateTime::currentDateTime(), "MMMM dd, yyyy - HH:mm:ss" );
 
         // Write the header
         out << "Program: HashInspector https://github.com/complexKA/HashInspector\n";
-        out << "Date/Time: " << xTimestamp << "\n";
+        out << "Date/Time: " << sTimestamp << "\n";
         out << "------------------------------------------------\n\n";
 
         // Iterate through all items in the ListWidget

@@ -37,7 +37,7 @@ private:
     QButtonGroup *pHashFormatRBgrp;
     QButtonGroup *pOnHNFRBgrp;
 
-    void onExtPresetSelected( int );
+    void onExtPresetSelected( const int );
 
 };
 

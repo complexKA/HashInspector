@@ -12,6 +12,7 @@
         <file>images/HashInspector-Logo.png</file>
         <file>images/Setting-Disabled.png</file>
         <file>images/Info-Disabled.png</file>
-        <file>images/RedArrow.png</file>
+        <file>images/Checkmark.png</file>
+        <file>images/RedX.png</file>
     </qresource>
 </RCC>

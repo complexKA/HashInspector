@@ -114,6 +114,7 @@ AppSettings::AppSettings( QWidget *parent )
     ui->cb_IncludeSubf->setChecked(       CMI.bIncludeSubf     );
     ui->cb_ShowIcons->setChecked(         CMI.bShowIcons       );
     ui->cb_ShowSkipped->setChecked(       CMI.bShowSkipped     );
+    ui->cb_ShowTimes->setChecked(         CMI.bShowTimes       );
 
     // Filter section
     ui->pte_ExcludePat->setPlainText(     CMI.sExcludePat      );
@@ -147,8 +148,8 @@ AppSettings::~AppSettings()
 
 
 // Features to restore the last tab when reopening the settings
-void AppSettings::setInitialTab( int iTab ) {  ui->tabWidget->setCurrentIndex( iTab );  }
-int AppSettings::getLastTab()               {  return ui->tabWidget->currentIndex();    }
+void AppSettings::setInitialTab( const int iTab ) {  ui->tabWidget->setCurrentIndex( iTab );  }
+int AppSettings::getLastTab()                     {  return ui->tabWidget->currentIndex();    }
 
 
 
@@ -216,6 +217,7 @@ void AppSettings::on_pb_Save_clicked()
     CMI.bIncludeSubf     = ui->cb_IncludeSubf->isChecked();
     CMI.bShowIcons       = ui->cb_ShowIcons->isChecked();
     CMI.bShowSkipped     = ui->cb_ShowSkipped->isChecked();
+    CMI.bShowTimes       = ui->cb_ShowTimes->isChecked();
 
     // Filter section
     CMI.sExcludePat      = ui->pte_ExcludePat->toPlainText();
@@ -273,7 +275,8 @@ void AppSettings::on_pb_Default_clicked()
     ui->cb_ShowScanPath->setChecked( false );
     ui->cb_IncludeSubf->setChecked( true );
     ui->cb_ShowIcons->setChecked( true );
-    ui->cb_ShowScanPath->setChecked( false );
+    ui->cb_ShowSkipped->setChecked( false );
+    ui->cb_ShowTimes->setChecked( false );
 
     // Filter section
     ui->pte_ExcludePat->setPlainText( FILTER_DEFAULTPAT );
@@ -297,7 +300,7 @@ void AppSettings::on_pb_Default_clicked()
 
 
 // The user has selected an extension preset in the tab "Inspection 1"
-void AppSettings::onExtPresetSelected( int iIndex )  {
+void AppSettings::onExtPresetSelected( const int iIndex )  {
 
     QString sAllowedExts;
 
